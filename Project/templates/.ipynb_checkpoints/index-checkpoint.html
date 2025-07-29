@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admission Predictor</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 35px;
+      width: 400px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffff;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .form-group i {
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      color: #00ffff;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 12px 12px 36px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #00e6e6, #00ffff);
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff80;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    .result {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 18px;
+      color: #00ffcc;
+      animation: slideUp 0.7s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media(max-width: 480px) {
+      .glass-card {
+        width: 90%;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h2>🎓 Admission Predictor</h2>
+
+    <form action="/predict" method="POST">
+      <div class="form-group">
+        <i class="fas fa-chart-line"></i>
+        <input type="number" name="gre" placeholder="GRE Score (out of 340)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-language"></i>
+        <input type="number" name="toefl" placeholder="TOEFL Score (out of 120)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-university"></i>
+        <input type="number" name="rating" placeholder="University Rating (1-5)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-lightbulb"></i>
+        <input type="number" step="0.5" name="sop" placeholder="SOP Strength (1.0 - 5.0)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-users"></i>
+        <input type="number" step="0.5" name="lor" placeholder="LOR Strength (1.0 - 5.0)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-graduation-cap"></i>
+        <input type="number" step="0.01" name="cgpa" placeholder="CGPA (out of 10)" required />
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-vial"></i>
+        <select name="research" required>
+          <option value="">Research Experience?</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <button type="submit">🚀 Predict</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+      🎯 Predicted Chance of Admission: <strong>{{ prediction }}%</strong>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

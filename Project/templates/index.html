@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admission Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(#0f2027, #203a43, #2c5364);
+      color: #00fff7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background-color: rgba(0,0,0,0.4);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00f0ff;
+      width: 400px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: none;
+      background-color: #111;
+      color: #00fff7;
+      box-shadow: inset 0 0 5px #00f0ff;
+    }
+    button {
+      width: 100%;
+      background-color: #00f0ff;
+      color: black;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #ff0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🎓 Admission Predictor</h2>
+    <form action="/predict" method="post">
+      <input type="number" name="gre" placeholder="GRE Score (out of 340)" required>
+      <input type="number" name="toefl" placeholder="TOEFL Score (out of 120)" required>
+      <input type="number" name="rating" placeholder="University Rating (1-5)" required>
+      <input type="number" name="sop" placeholder="SOP Strength (1.0 - 5.0)" step="0.1" required>
+      <input type="number" name="lor" placeholder="LOR Strength (1.0 - 5.0)" step="0.1" required>
+      <input type="number" name="cgpa" placeholder="CGPA (out of 10)" step="0.1" required>
+      <select name="research" required>
+        <option value="" disabled selected>Research Experience?</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </select>
+      <button type="submit">🚀 Predict</button>
+    </form>
+    {% if prediction %}
+    <div class="result">Predicted Chance of Admission: {{ prediction }}%</div>
+    {% endif %}
+  </div>
+</body>
+</html>
